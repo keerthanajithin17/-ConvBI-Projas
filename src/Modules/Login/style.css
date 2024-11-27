@@ -1,0 +1,72 @@
+/* style.css */
+
+/* Container for the entire layout */
+.login-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Left Section */
+  .centered-container {
+    flex: 1;
+    background: #0c3049;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  /* Right Section */
+  .login-form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f2f5;
+  }
+  
+  .login-form-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+  }
+  
+  /* Form Title */
+  .form-title {
+    text-align: center;
+    color: #0c3049;
+    font-size: 1.5rem;
+  }
+  
+  /* Button Style */
+  .ant-btn-primary {
+    width: 100%;
+    background: #0c3049;
+    border-color: #0c3049;
+  }
+  .ant-btn-primary:hover {
+    
+    background: #276074 !important;
+    
+  }
+  
+  /* Forgot Password Link */
+  .forgot-password {
+    margin-bottom: 16px;
+    text-align: right;
+    color: #276074;
+  }
+  
+  /* Link hover color */
+  .forgot-password a {
+    color: #276074;
+    text-decoration: none;
+  }
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  

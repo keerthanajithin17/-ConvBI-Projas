@@ -1,0 +1,14 @@
+/* Add padding and spacing */
+.ant-layout-content {
+    padding: 24px;
+  }
+  
+  /* Customize the chart and table spacing */
+  .chart-container {
+    margin-bottom: 24px;
+  }
+  
+  .table-container {
+    margin-top: 24px;
+  }
+  
