@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { Layout, Select, Checkbox, Table, Row, Col } from "antd";
+import { Layout, Select, Checkbox, Table, Row, Col, Button, Space } from "antd";
+import { BarChartOutlined, PieChartOutlined, LineChartOutlined, RadarChartOutlined, AreaChartOutlined, BulbOutlined, AppstoreAddOutlined } from "@ant-design/icons";
+import { Bar, Pie, Line, Radar, Doughnut, PolarArea, Bubble, Scatter } from "react-chartjs-2";
+import "./style.css";
+
+// Register the required components
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  RadialLinearScale,
   BarElement,
   Title,
   Tooltip,
@@ -11,19 +17,29 @@ import {
   PointElement,
   LineElement,
   ArcElement,
+  BubbleController,
+  RadarController,
+  PolarAreaController,
+  DoughnutController,
+  ScatterController,
 } from "chart.js";
-import { Bar, Pie, Line } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  RadialLinearScale,
   BarElement,
   Title,
   Tooltip,
   Legend,
   PointElement,
   LineElement,
-  ArcElement
+  ArcElement,
+  BubbleController,
+  RadarController,
+  PolarAreaController,
+  DoughnutController,
+  ScatterController
 );
 
 const { Content } = Layout;
@@ -84,77 +100,152 @@ const ReportBuilder = () => {
     setSelectedFields(checkedValues);
   };
 
+  // Handle Chart Type Selection
+  const handleChartTypeChange = (type) => {
+    setChartType(type);
+  };
+
   return (
     <Layout>
-      <Content style={{ padding: "24px", background: "#f0f2f5" }}>
+      <Content className="layout-content">
         <Row gutter={[16, 16]}>
-          {/* Dropdown for Table Selection */}
-          <Col span={6}>
-            <Select
-              defaultValue="sales"
-              style={{ width: "100%" }}
-              onChange={setSelectedData}
-            >
-              <Option value="sales">Sales Data</Option>
-              <Option value="users">User Data</Option>
-              <Option value="products">Product Data</Option>
-            </Select>
+          {/* Charts on the Left */}
+          <Col span={16}>
+            <div className="chart-container">
+              <div className="chart-canvas" style={{ height: "400px" }}>
+                {chartType === "bar" && (
+                  <Bar data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "pie" && (
+                  <Pie data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "line" && (
+                  <Line data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "bubble" && (
+                  <Bubble data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "radar" && (
+                  <Radar data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "polar" && (
+                  <PolarArea data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "doughnut" && (
+                  <Doughnut data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+                {chartType === "scatter" && (
+                  <Scatter data={chartData} options={{ maintainAspectRatio: false }} />
+                )}
+              </div>
+            </div>
           </Col>
 
-          {/* Dropdown for Chart Type */}
-          <Col span={6}>
-            <Select
-              defaultValue="bar"
-              style={{ width: "100%" }}
-              onChange={setChartType}
-            >
-              <Option value="bar">Bar Chart</Option>
-              <Option value="pie">Pie Chart</Option>
-              <Option value="line">Line Chart</Option>
-            </Select>
-          </Col>
+          {/* Filters and Graph Icons on the Right */}
+          <Col span={8}>
+            <div className="filter-panel">
+              <div className="filter-title">Filters</div>
 
-          {/* Checkbox for Fields */}
-          <Col span={12}>
-            <Checkbox.Group
-              options={[
-                { label: "Date", value: "date" },
-                { label: "Amount", value: "amount" },
-                { label: "Product", value: "product" },
-              ]}
-              defaultValue={["date", "amount", "product"]}
-              onChange={handleFieldChange}
-            />
+              {/* Dropdown for Table Selection */}
+              <Select
+                defaultValue="sales"
+                style={{ width: "100%", marginBottom: "16px" }}
+                onChange={setSelectedData}
+              >
+                <Option value="sales">Sales Data</Option>
+                <Option value="users">User Data</Option>
+                <Option value="products">Product Data</Option>
+              </Select>
+
+              {/* Checkbox for Fields */}
+              <Checkbox.Group
+                options={[
+                  { label: "Date", value: "date" },
+                  { label: "Amount", value: "amount" },
+                  { label: "Product", value: "product" },
+                ]}
+                defaultValue={["date", "amount", "product"]}
+                onChange={handleFieldChange}
+              />
+
+              <div className="chart-icons">
+                <Row gutter={[16, 16]}>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("bar")}
+                    >
+                      <BarChartOutlined style={{ fontSize: "30px" }} />
+                      Bar Chart
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("pie")}
+                    >
+                      <PieChartOutlined style={{ fontSize: "30px" }} />
+                      Pie Chart
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("line")}
+                    >
+                      <LineChartOutlined style={{ fontSize: "30px" }} />
+                      Line Chart
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("radar")}
+                    >
+                      <RadarChartOutlined style={{ fontSize: "30px" }} />
+                      Radar Chart
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("polar")}
+                    >
+                      <AppstoreAddOutlined style={{ fontSize: "30px" }} />
+                      Polar Area
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("doughnut")}
+                    >
+                      <BulbOutlined style={{ fontSize: "30px" }} />
+                      Doughnut Chart
+                    </Button>
+                  </Col>
+                  <Col span={12}>
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={() => handleChartTypeChange("scatter")}
+                    >
+                      <AreaChartOutlined style={{ fontSize: "30px" }} />
+                      Scatter Chart
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            </div>
           </Col>
         </Row>
 
-        {/* Chart Rendering */}
-        <div style={{ marginTop: "24px", textAlign: "center" }}>
-          {chartType === "bar" && (
-            <div style={{ width: "400px", height: "300px", margin: "0 auto" }}>
-              <Bar data={chartData} options={{ maintainAspectRatio: false }} />
-            </div>
-          )}
-          {chartType === "pie" && (
-            <div style={{ width: "300px", height: "300px", margin: "0 auto" }}>
-              <Pie data={chartData} options={{ maintainAspectRatio: false }} />
-            </div>
-          )}
-          {chartType === "line" && (
-            <div style={{ width: "400px", height: "300px", margin: "0 auto" }}>
-              <Line data={chartData} options={{ maintainAspectRatio: false }} />
-            </div>
-          )}
-        </div>
-
-        {/* Table Rendering */}
-        <div style={{ marginTop: "24px" }}>
-          <Table
-            dataSource={data}
-            columns={columns}
-            rowKey={(record) => record.date}
-          />
-        </div>
+        {/* Table for Data */}
+        <Table
+          dataSource={data}
+          columns={columns}
+          pagination={false}
+          style={{ marginTop: "16px" }}
+        />
       </Content>
     </Layout>
   );

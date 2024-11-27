@@ -1,11 +1,37 @@
-/* Add padding and spacing */
-.ant-layout-content {
+.layout-content {
     padding: 24px;
+    background: #f0f2f5;
   }
   
-  /* Customize the chart and table spacing */
   .chart-container {
-    margin-bottom: 24px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+  
+  .chart-canvas {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .filter-panel {
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+  
+  .filter-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .chart-icons {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-around;
   }
   
   .table-container {
